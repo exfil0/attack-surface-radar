@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Surface Radar</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Attack Surface Radar Chart</h1>
+        <form id="recordForm">
+            <div class="input-group">
+                <label for="entryPoint">Entry Point:</label>
+                <select id="entryPoint" required aria-required="true" title="Select an entry point for the attack surface.">
+                    <option value="" disabled selected>Select Entry Point</option>
+                    <option value="UI Form">UI Form</option>
+                    <option value="HTTP Header">HTTP Header</option>
+                    <option value="API">API</option>
+                    <option value="File">File</option>
+                    <option value="Database">Database</option>
+                    <option value="Runtime Argument">Runtime Argument</option>
+                    <option value="Network Port">Network Port</option>
+                    <option value="Email Input">Email Input</option>
+                    <option value="Command Line">Command Line</option>
+                    <option value="Cookie">Cookie</option>
+                    <option value="WebSocket">WebSocket</option>
+                    <option value="Third-Party Service">Third-Party Service</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="attackVector">Attack Vector:</label>
+                <select id="attackVector" required aria-required="true" title="Select the attack vector.">
+                    <option value="" disabled selected>Select Attack Vector</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Local">Local</option>
+                    <option value="Physical">Physical</option>
+                    <option value="Social Engineering">Social Engineering</option>
+                    <option value="Insider Threat">Insider Threat</option>
+                    <option value="Supply Chain">Supply Chain</option>
+                    <option value="Distributed">Distributed</option>
+                    <option value="Malware">Malware</option>
+                    <option value="Phishing">Phishing</option>
+                    <option value="Ransomware">Ransomware</option>
+                    <option value="Zero-Day Exploit">Zero-Day Exploit</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="riskImpact">Risk Impact:</label>
+                <select id="riskImpact" required aria-required="true" title="Select the risk impact level.">
+                    <option value="" disabled selected>Select Risk Impact</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="targetAsset">Target/Affected Asset:</label>
+                <input type="text" id="targetAsset" placeholder="Targeted or Affected Asset" required aria-required="true" title="Describe the targeted or affected asset.">
+            </div>
+            <div class="input-group">
+                <label for="subCategory">Subcategory:</label>
+                <input type="text" id="subCategory" placeholder="Description of the finding" required aria-required="true" title="Provide a brief description of the finding.">
+            </div>
+            <div class="input-group">
+                <label for="riskValue">Risk Value (1-10):</label>
+                <input type="number" id="riskValue" min="1" max="10" required aria-required="true" title="Enter a risk value between 1 and 10.">
+            </div>
+            <button type="button" onclick="addRecord()">Add Record</button>
+        </form>
+
+        <h2>Entered Records</h2>
+        <table id="liveTable">
+            <thead>
+                <tr>
+                    <th>Entry Point</th>
+                    <th>Attack Vector</th>
+                    <th>Risk Impact</th>
+                    <th>Target Asset</th>
+                    <th>Subcategory</th>
+                    <th>Risk Value</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div id="loadingSpinner" style="display:none;">
+            <img src="spinner.gif" alt="Loading..." />
+        </div>
+
+        <button id="generateGraph" onclick="generateGraph()">Generate Radar Chart and Summary</button>
+        <button id="exportData" onclick="exportData()">Export Data</button>
+        <canvas id="attackSurfaceChart"></canvas>
+
+        <h2>Attack Surface Details</h2>
+        <table id="detailsTable">
+            <thead>
+                <tr>
+                    <th>Entry Point</th>
+                    <th>Attack Vector</th>
+                    <th>Risk Impact</th>
+                    <th>Target Asset</th>
+                    <th>Subcategory</th>
+                    <th>Risk Value</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
